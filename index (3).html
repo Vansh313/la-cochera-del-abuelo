@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Cochera del Abuelo — Restaurante en Sevilla</title>
+<meta name="description" content="An intimate French-Andalusian dining room in the heart of Seville's Casco Antiguo. Since 2016.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Lora:ital,wght@0,400;0,500;1,400&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory: #f2ead9;
+    --ivory-2: #ece1cb;
+    --bottle: #2b3324;
+    --bottle-dark: #1c2318;
+    --oxblood: #732c2f;
+    --ochre: #c7912e;
+    --rose: #b96b73;
+    --gold: #a9812f;
+    --ink: #2a241c;
+    --paper-line: rgba(42,36,28,0.14);
+
+    --display: 'Cormorant', serif;
+    --body: 'Lora', serif;
+    --label: 'Jost', sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--ivory);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img{ max-width:100%; display:block; }
+  a{ color: inherit; }
+  .wrap{ max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+
+  ::selection{ background: var(--ochre); color: var(--ivory); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  }
+
+  /* ---------- Eyebrow / labels ---------- */
+  .eyebrow{
+    font-family: var(--label);
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  /* ---------- Plate frame — the signature element ---------- */
+  .plate{
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+    aspect-ratio: 1/1;
+    background: #fff;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.6) inset,
+      0 0 0 1px rgba(169,129,47,0.35),
+      0 18px 34px -14px rgba(28,35,24,0.45);
+  }
+  .plate::before{
+    content:"";
+    position:absolute; inset: 6%;
+    border-radius:50%;
+    border: 1px solid rgba(169,129,47,0.55);
+    z-index: 3;
+    pointer-events:none;
+  }
+  .plate::after{
+    content:"";
+    position:absolute; inset: 0;
+    border-radius:50%;
+    box-shadow: 0 0 0 8px rgba(255,255,255,0.9) inset, 0 0 0 9px rgba(169,129,47,0.4) inset;
+    z-index: 2;
+    pointer-events:none;
+  }
+  .plate img{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit: cover;
+    z-index:1;
+    transition: transform 1.4s cubic-bezier(.16,.9,.2,1);
+  }
+  .plate:hover img{ transform: scale(1.08); }
+
+  /* ---------- Nav ---------- */
+  header.site{
+    position: fixed; top:0; left:0; right:0; z-index: 50;
+    padding: 22px 0;
+    transition: background .5s ease, padding .4s ease, box-shadow .4s ease;
+  }
+  header.site.scrolled{
+    background: rgba(242,234,217,0.92);
+    backdrop-filter: blur(8px);
+    padding: 14px 0;
+    box-shadow: 0 1px 0 var(--paper-line);
+  }
+  header.site .bar{ display:flex; align-items:center; justify-content:space-between; }
+  .brandmark{ display:flex; align-items:center; gap:12px; text-decoration:none; }
+  .brandmark svg{ width:34px; height:34px; flex-shrink:0; }
+  .brandmark span{
+    font-family: var(--display); font-style: italic; font-weight:500;
+    font-size: 21px; color: var(--ivory);
+    letter-spacing: 0.01em;
+  }
+  header.site.scrolled .brandmark span{ color: var(--bottle-dark); }
+  header.site.scrolled .brandmark svg path, header.site.scrolled .brandmark svg circle{ stroke: var(--bottle-dark); }
+
+  nav.links{ display:flex; gap:34px; align-items:center; }
+  nav.links a{
+    font-family: var(--label); font-size: 12.5px; letter-spacing:.14em; text-transform:uppercase;
+    text-decoration:none; color: var(--ivory); opacity:.88; position:relative;
+  }
+  header.site.scrolled nav.links a{ color: var(--bottle-dark); }
+  nav.links a::after{
+    content:""; position:absolute; left:0; right:0; bottom:-6px; height:1px; background: currentColor;
+    transform: scaleX(0); transform-origin:left; transition: transform .35s ease;
+  }
+  nav.links a:hover::after{ transform: scaleX(1); }
+  .reserve-btn{
+    font-family: var(--label); font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    border: 1px solid currentColor; padding: 10px 22px; text-decoration:none;
+    color: var(--ivory); transition: background .3s ease, color .3s ease;
+  }
+  header.site.scrolled .reserve-btn{ color: var(--bottle-dark); }
+  .reserve-btn:hover{ background: var(--ochre); color: var(--bottle-dark) !important; border-color: var(--ochre); }
+  .menu-toggle{ display:none; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative; height: 100vh; min-height:640px;
+    display:flex; align-items:flex-end;
+    overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, rgba(28,35,24,0.25) 0%, rgba(28,35,24,0.35) 45%, rgba(20,25,17,0.92) 100%), url('images/dining-arches.jpg') center 30%/cover no-repeat;
+  }
+  .hero-inner{
+    position:relative; z-index:2; width:100%;
+    padding-bottom: 70px;
+    color: var(--ivory);
+  }
+  .hero .eyebrow{ color: var(--ochre); }
+  .hero h1{
+    font-family: var(--display);
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(56px, 9vw, 120px);
+    line-height: 0.98;
+    margin: 14px 0 22px;
+    letter-spacing: 0.005em;
+  }
+  .hero-sub{
+    max-width: 480px;
+    font-family: var(--body);
+    font-size: 18px;
+    color: rgba(242,234,217,0.86);
+    margin-bottom: 34px;
+    font-style: italic;
+  }
+  .hero-actions{ display:flex; gap:18px; flex-wrap:wrap; align-items:center; }
+  .btn-primary{
+    font-family: var(--label); font-size:12.5px; letter-spacing:.14em; text-transform:uppercase;
+    background: var(--ochre); color: var(--bottle-dark); padding: 15px 30px;
+    text-decoration:none; display:inline-block; transition: background .3s ease, transform .3s ease;
+  }
+  .btn-primary:hover{ background: #dba646; transform: translateY(-2px); }
+  .btn-ghost{
+    font-family: var(--label); font-size:12.5px; letter-spacing:.14em; text-transform:uppercase;
+    color: var(--ivory); text-decoration:none; border-bottom:1px solid rgba(242,234,217,0.5);
+    padding-bottom: 3px;
+  }
+  .scroll-cue{
+    position:absolute; bottom: 28px; right: 32px; z-index:2;
+    color: var(--ivory); font-family: var(--label); font-size: 11px; letter-spacing:.2em; text-transform:uppercase;
+    writing-mode: vertical-rl; display:flex; align-items:center; gap:14px; opacity:.75;
+  }
+  .scroll-cue .line{ width:1px; height:46px; background: rgba(242,234,217,0.6); position:relative; overflow:hidden; }
+  .scroll-cue .line::after{
+    content:""; position:absolute; left:0; top:-100%; width:100%; height:100%; background: var(--ochre);
+    animation: cueDrop 2.4s ease-in-out infinite;
+  }
+  @keyframes cueDrop{ 0%{ top:-100%; } 60%{ top:100%; } 100%{ top:100%; } }
+
+  /* ---------- Marquee ribbon ---------- */
+  .ribbon{
+    background: var(--bottle-dark); color: var(--ivory-2);
+    overflow:hidden; white-space:nowrap; padding: 13px 0;
+    border-top: 1px solid rgba(242,234,217,0.12); border-bottom: 1px solid rgba(242,234,217,0.12);
+  }
+  .ribbon-track{ display:inline-flex; animation: marquee 32s linear infinite; }
+  .ribbon-track span{
+    font-family: var(--label); font-size:12px; letter-spacing:.22em; text-transform:uppercase;
+    padding: 0 26px; opacity:.85; display:inline-flex; align-items:center; gap:26px;
+  }
+  .ribbon-track span::after{ content:"—"; color: var(--gold); }
+  @keyframes marquee{ from{ transform:translateX(0);} to{ transform:translateX(-50%);} }
+
+  /* ---------- Sections generic ---------- */
+  section{ padding: 118px 0; position:relative; }
+  .section-head{ max-width: 640px; margin-bottom: 64px; }
+  .section-head h2{
+    font-family: var(--display); font-style:italic; font-weight:400;
+    font-size: clamp(38px, 5vw, 58px); margin: 12px 0 0; line-height:1.05;
+  }
+  .divider{
+    width: 46px; height:1px; background: var(--gold); margin: 26px 0;
+  }
+  .divider.center{ margin-left:auto; margin-right:auto; }
+
+  /* ---------- Story ---------- */
+  .story{ background: var(--ivory); }
+  .story-grid{
+    display:grid; grid-template-columns: 0.85fr 1.15fr; gap: 74px; align-items:center;
+  }
+  .story-photo{ position:relative; }
+  .story-photo img{
+    width:100%; height: 560px; object-fit:cover;
+    filter: sepia(6%) saturate(105%);
+  }
+  .story-photo-frame{
+    position:absolute; inset: 18px; border: 1px solid var(--gold); pointer-events:none;
+  }
+  .story-copy p{ font-size: 18px; color: rgba(42,36,28,0.86); margin: 0 0 22px; }
+  .story-copy .lede{
+    font-family: var(--display); font-style:italic; font-size: 27px; color: var(--bottle-dark);
+    line-height:1.35; margin-bottom: 28px;
+  }
+  .signatures{ display:flex; gap: 36px; margin-top: 40px; }
+  .signature-item{ font-family: var(--label); font-size: 12px; letter-spacing:.08em; }
+  .signature-item strong{
+    display:block; font-family: var(--display); font-style:italic; font-size: 24px; letter-spacing:0;
+    color: var(--oxblood); margin-bottom: 4px;
+  }
+
+  /* ---------- Dishes / signature plates section ---------- */
+  .dishes{ background: var(--bottle-dark); color: var(--ivory); }
+  .dishes .eyebrow{ color: var(--ochre); }
+  .dishes .section-head h2{ color: var(--ivory); }
+  .dish-grid{
+    display:grid; grid-template-columns: repeat(4, 1fr); gap: 44px 32px;
+  }
+  .dish-card{ text-align:center; }
+  .dish-card .plate{ width: 100%; margin-bottom: 22px; }
+  .dish-card:nth-child(2n) .plate{ margin-top: 46px; }
+  .dish-name{ font-family: var(--display); font-style:italic; font-size:23px; margin-bottom:6px; }
+  .dish-desc{ font-family: var(--label); font-size:12.5px; letter-spacing:.03em; color: rgba(242,234,217,0.65); line-height:1.6; }
+
+  /* ---------- Cheesecake feature ---------- */
+  .feature{
+    background: var(--oxblood); color: var(--ivory);
+    display:grid; grid-template-columns: 1fr 1fr; align-items:stretch; padding:0;
+  }
+  .feature-copy{ padding: 100px 72px; display:flex; flex-direction:column; justify-content:center; }
+  .feature-copy .eyebrow{ color: var(--ivory); opacity:.75; }
+  .feature-copy h2{
+    font-family: var(--display); font-style:italic; font-weight:400; font-size: clamp(40px,5vw,64px);
+    margin: 14px 0 22px; line-height:1;
+  }
+  .feature-copy p{ font-size:17.5px; color: rgba(242,234,217,0.88); max-width: 440px; }
+  .feature-stat{ margin-top:32px; font-family: var(--label); letter-spacing:.1em; font-size:12.5px; }
+  .feature-stat b{ font-family: var(--display); font-style:italic; font-size:34px; display:block; color:var(--ochre); }
+  .feature-photo{ position:relative; overflow:hidden; }
+  .feature-photo img{ width:100%; height:100%; object-fit:cover; min-height: 420px; }
+
+  /* ---------- Gallery (the room) ---------- */
+  .room{ background: var(--ivory-2); }
+  .room-grid{
+    display:grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 130px;
+    gap: 14px;
+  }
+  .room-grid img{ width:100%; height:100%; object-fit:cover; }
+  .r1{ grid-column: span 3; grid-row: span 3; }
+  .r2{ grid-column: span 3; grid-row: span 2; }
+  .r3{ grid-column: span 3; grid-row: span 3; }
+  .r4{ grid-column: span 3; grid-row: span 2; }
+  .r5{ grid-column: span 2; grid-row: span 2; }
+  .r6{ grid-column: span 2; grid-row: span 2; }
+  .r7{ grid-column: span 2; grid-row: span 2; }
+
+  /* ---------- Reviews ---------- */
+  .reviews{ background: var(--bottle); color: var(--ivory); }
+  .reviews .section-head{ margin: 0 auto 64px; text-align:center; max-width: 560px; }
+  .reviews .eyebrow{ color: var(--ochre); }
+  .reviews .section-head h2{ color: var(--ivory); }
+  .review-grid{
+    display:grid; grid-template-columns: repeat(3,1fr); gap: 40px;
+  }
+  .review-card{
+    border-top: 1px solid rgba(242,234,217,0.22); padding-top: 26px;
+  }
+  .stars{ color: var(--ochre); font-size:14px; letter-spacing:2px; margin-bottom: 16px; }
+  .review-card p{
+    font-family: var(--display); font-style:italic; font-size: 21px; line-height:1.45;
+    color: var(--ivory); margin: 0 0 20px;
+  }
+  .review-name{ font-family: var(--label); font-size:12px; letter-spacing:.08em; color: rgba(242,234,217,0.6); text-transform:uppercase; }
+  .rating-banner{
+    text-align:center; margin-top: 72px; font-family: var(--label); letter-spacing:.16em; text-transform:uppercase; font-size:12.5px; color: rgba(242,234,217,0.7);
+  }
+  .rating-banner b{ font-family:var(--display); font-style:italic; color: var(--ochre); font-size: 22px; letter-spacing:0; text-transform:none; }
+
+  /* ---------- Team ---------- */
+  .team{ background: var(--ivory); }
+  .team-grid{ display:grid; grid-template-columns: 1.1fr 0.9fr; gap: 70px; align-items:center; }
+  .team-photo{ position:relative; }
+  .team-photo img{ width:100%; object-fit:cover; height: 480px; }
+  .team-copy p{ font-size:17.5px; color: rgba(42,36,28,0.85); }
+  .team-names{ display:flex; gap:50px; margin-top:36px; }
+  .team-names div strong{ display:block; font-family:var(--display); font-style:italic; font-size:26px; color:var(--bottle-dark); }
+  .team-names div span{ font-family:var(--label); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color: var(--gold); }
+
+  /* ---------- Visit / reservation ---------- */
+  .visit{ background: var(--bottle-dark); color: var(--ivory); }
+  .visit-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+  .visit .eyebrow{ color: var(--ochre); }
+  .visit h2{ font-family: var(--display); font-style:italic; font-weight:400; font-size: clamp(36px,4.5vw,52px); margin: 12px 0 30px; }
+  .info-row{ display:flex; gap: 20px; padding: 20px 0; border-top: 1px solid rgba(242,234,217,0.18); }
+  .info-row:last-of-type{ border-bottom: 1px solid rgba(242,234,217,0.18); }
+  .info-row .k{ font-family: var(--label); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color: var(--gold); width: 130px; flex-shrink:0; }
+  .info-row .v{ font-family: var(--body); font-size:16.5px; color: rgba(242,234,217,0.92); }
+  .info-row .v a{ text-decoration:none; border-bottom:1px solid rgba(242,234,217,0.4); }
+  .visit-cta{ margin-top: 36px; }
+  .map-frame{ position:relative; height:100%; min-height:420px; filter: sepia(20%) saturate(60%) brightness(0.9); }
+  .map-frame iframe{ width:100%; height:100%; border:0; min-height:420px; }
+  .map-frame::after{ content:""; position:absolute; inset:0; box-shadow: inset 0 0 0 1px rgba(169,129,47,0.5); pointer-events:none; }
+
+  /* ---------- Footer ---------- */
+  footer{ background: var(--bottle-dark); color: rgba(242,234,217,0.55); padding: 44px 0; }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap: 18px; }
+  .footer-row .brandmark span{ color: var(--ivory); font-size:18px; }
+  footer nav{ display:flex; gap: 26px; }
+  footer nav a{ font-family: var(--label); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; text-decoration:none; color: rgba(242,234,217,0.55); }
+  .footer-fine{ font-family: var(--label); font-size:11px; letter-spacing:.04em; margin-top: 26px; opacity:.6; }
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{ opacity:0; transform: translateY(28px); transition: opacity .9s ease, transform .9s cubic-bezier(.16,.9,.2,1); }
+  .reveal.in{ opacity:1; transform:none; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 980px){
+    .story-grid, .team-grid, .visit-grid{ grid-template-columns: 1fr; }
+    .story-photo img, .team-photo img{ height: 380px; }
+    .dish-grid{ grid-template-columns: repeat(2,1fr); }
+    .dish-card:nth-child(2n) .plate{ margin-top:0; }
+    .review-grid{ grid-template-columns: 1fr; gap: 34px; }
+    .feature{ grid-template-columns: 1fr; }
+    .feature-copy{ padding: 64px 28px; order:2; }
+    .feature-photo img{ min-height: 320px; }
+    nav.links{ display:none; }
+    .room-grid{ grid-template-columns: repeat(2,1fr); grid-auto-rows: 160px; }
+    .r1,.r2,.r3,.r4,.r5,.r6,.r7{ grid-column: span 1; grid-row: span 1; }
+    .r1,.r3{ grid-row: span 2; }
+  }
+  @media (max-width: 600px){
+    .wrap{ padding: 0 20px; }
+    section{ padding: 78px 0; }
+    .hero-sub{ font-size:16px; }
+    .signatures{ flex-wrap:wrap; gap: 22px; }
+    .info-row{ flex-direction:column; gap:4px; }
+    .info-row .k{ width:auto; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site" id="siteHeader">
+  <div class="wrap bar">
+    <a href="#top" class="brandmark">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 8C24 16 34 20 42 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        <circle cx="30" cy="34" r="16" stroke="currentColor" stroke-width="1.4"/>
+        <circle cx="30" cy="34" r="1.6" fill="currentColor"/>
+        <path d="M30 22V34L38 40" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      <span>La Cochera del Abuelo</span>
+    </a>
+    <nav class="links">
+      <a href="#historia">La Historia</a>
+      <a href="#carta">La Carta</a>
+      <a href="#sala">La Sala</a>
+      <a href="#opiniones">Opiniones</a>
+      <a href="#visitanos">Visítanos</a>
+    </nav>
+    <a class="reserve-btn" href="https://www.covermanager.com/reservation/module_restaurant/restaurante-la" target="_blank" rel="noopener">Reservar</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero" style="padding:0;">
+    <div class="hero-bg"></div>
+    <div class="wrap hero-inner">
+      <div class="eyebrow">Casco Antiguo · Sevilla · Desde 2016</div>
+      <h1>La Cochera<br>del&nbsp;Abuelo</h1>
+      <p class="hero-sub">"Como cenar en casa de tus abuelos ricos" — if your grandparents trained in Michelin-starred kitchens. Six tables, one obsession with the plate.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="https://www.covermanager.com/reservation/module_restaurant/restaurante-la" target="_blank" rel="noopener">Reservar Mesa</a>
+        <a class="btn-ghost" href="#carta">Ver la carta</a>
+      </div>
+    </div>
+    <div class="scroll-cue"><span>Desplázate</span><span class="line"></span></div>
+  </section>
+
+  <!-- RIBBON -->
+  <div class="ribbon">
+    <div class="ribbon-track">
+      <span>4.8 de 5 · 883 reseñas Google</span>
+      <span>Cocina de Bosco Benítez</span>
+      <span>Seis mesas, servicio de familia</span>
+      <span>Guía Repsol Recomendado</span>
+      <span>4.8 de 5 · 883 reseñas Google</span>
+      <span>Cocina de Bosco Benítez</span>
+      <span>Seis mesas, servicio de familia</span>
+      <span>Guía Repsol Recomendado</span>
+    </div>
+  </div>
+
+  <!-- STORY -->
+  <section class="story" id="historia">
+    <div class="wrap story-grid">
+      <div class="story-photo reveal">
+        <img src="images/cinta-bosco.jpg" alt="Cinta Romero y Bosco Benítez, La Cochera del Abuelo">
+        <div class="story-photo-frame"></div>
+      </div>
+      <div class="story-copy reveal">
+        <div class="eyebrow">La Historia</div>
+        <p class="lede">A coach house that became a bar, that became six tables where Seville quietly eats better than almost anywhere else in the city.</p>
+        <p>In 2016, Cinta Romero took over what was once a tiny neighbourhood bar called El Abuelo, tucked into a quiet street of the Casco Antiguo. She kept the name, the antique china, and the feeling of walking into somebody's home — and built a kitchen around it.</p>
+        <p>In 2019, chef Bosco Benítez joined her, bringing a French-trained hand to Andalusian ingredients. What started as weekend tasting menus grew into daily service, without ever adding a table. The room still seats barely a dozen — every plate is still finished within a few metres of where it's eaten.</p>
+        <div class="signatures">
+          <div class="signature-item"><strong>2016</strong>Founded by Cinta Romero</div>
+          <div class="signature-item"><strong>2019</strong>Bosco Benítez joins as chef</div>
+          <div class="signature-item"><strong>4.8★</strong>883 Google reviews</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIGNATURE DISHES -->
+  <section class="dishes" id="carta">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">La Carta</div>
+        <h2>What guests keep<br>ordering twice</h2>
+      </div>
+      <div class="dish-grid">
+        <div class="dish-card reveal">
+          <div class="plate"><img src="images/venison-plate.jpg" alt="Tataki de Ciervo"></div>
+          <div class="dish-name">Tataki de Ciervo</div>
+          <div class="dish-desc">Seared venison, root purée, wild jus</div>
+        </div>
+        <div class="dish-card reveal">
+          <div class="plate"><img src="images/scallops-floral.jpg" alt="Vieiras"></div>
+          <div class="dish-name">Vieiras en su Concha</div>
+          <div class="dish-desc">Scallops, citrus, on antique porcelain</div>
+        </div>
+        <div class="dish-card reveal">
+          <div class="plate"><img src="images/risotto-langoustine.jpg" alt="Arroz Meloso"></div>
+          <div class="dish-name">Arroz Meloso</div>
+          <div class="dish-desc">Creamy rice, red prawn, shellfish stock</div>
+        </div>
+        <div class="dish-card reveal">
+          <div class="plate"><img src="images/mackerel-pomegranate.jpg" alt="Caballa"></div>
+          <div class="dish-name">Caballa Curada</div>
+          <div class="dish-desc">Cured mackerel, pomegranate, pickled onion</div>
+        </div>
+        <div class="dish-card reveal">
+          <div class="plate"><img src="images/tuna-cubes-rose.jpg" alt="Tataki de Atún"></div>
+          <div class="dish-name">Tataki de Atún</div>
+          <div class="dish-desc">Seared tuna, cold pea velouté, hazelnut</div>
+        </div>
+        <div class="dish-card reveal">
+          <div class="plate"><img src="images/duck-farro.jpg" alt="Pato con Farro"></div>
+          <div class="dish-name">Confit de Pato</div>
+          <div class="dish-desc">Duck leg confit, farro, sun-dried tomato</div>
+        </div>
+        <div class="dish-card reveal">
+          <div class="plate"><img src="images/veloute-snails.jpg" alt="Crema con caracoles"></div>
+          <div class="dish-name">Crema de Temporada</div>
+          <div class="dish-desc">Seasonal velouté, snails, toasted hazelnut</div>
+        </div>
+        <div class="dish-card reveal">
+          <div class="plate"><img src="images/ceviche.jpg" alt="Ceviche"></div>
+          <div class="dish-name">Ceviche del Día</div>
+          <div class="dish-desc">Market fish, leche de tigre, toasted corn</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHEESECAKE FEATURE -->
+  <section class="feature">
+    <div class="feature-copy reveal">
+      <div class="eyebrow">The one everyone mentions</div>
+      <h2>Tarta de Queso</h2>
+      <p>Ninety-four separate reviews name it by name. No modern deconstruction, no foam — just a Basque-style burnt cheesecake, dense and barely set in the centre, that guests drive across Seville for on its own.</p>
+      <div class="feature-stat"><b>94</b>mentions in Google reviews — more than any other dish</div>
+    </div>
+    <div class="feature-photo reveal">
+      <img src="images/flan.jpg" alt="Tarta de Queso, La Cochera del Abuelo">
+    </div>
+  </section>
+
+  <!-- ROOM GALLERY -->
+  <section class="room" id="sala">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">La Sala</div>
+        <h2>Six tables,<br>no two chairs alike</h2>
+      </div>
+      <div class="room-grid">
+        <div class="r1 reveal"><img src="images/dining-arches.jpg" alt="Dining room"></div>
+        <div class="r2 reveal"><img src="images/tapestry-room.jpg" alt="Dining room tapestry"></div>
+        <div class="r5 reveal"><img src="images/corridor-mirror.jpg" alt="Entrance corridor"></div>
+        <div class="r6 reveal"><img src="images/fork-closeup.jpg" alt="Table setting detail"></div>
+        <div class="r3 reveal"><img src="images/dining-wide.jpg" alt="Dining room wide"></div>
+        <div class="r4 reveal"><img src="images/wine-glass-setting.jpg" alt="Wine glass being set"></div>
+        <div class="r7 reveal"><img src="images/butter-toile.jpg" alt="Homemade butter"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews" id="opiniones">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Opiniones</div>
+        <h2>Guests keep reaching<br>for the same comparison</h2>
+      </div>
+      <div class="review-grid">
+        <div class="review-card reveal">
+          <div class="stars">★★★★★</div>
+          <p>It felt like being welcomed into a relative's home, if that relative happened to run a Michelin-calibre kitchen.</p>
+          <div class="review-name">Google Review · Local Guide</div>
+        </div>
+        <div class="review-card reveal">
+          <div class="stars">★★★★★</div>
+          <p>Small and unassuming from outside — inside, every dish arrived with more intention than restaurants three times the price.</p>
+          <div class="review-name">Google Review · Seville, 2026</div>
+        </div>
+        <div class="review-card reveal">
+          <div class="stars">★★★★★</div>
+          <p>We came for the cheesecake everyone talks about. We stayed because dinner turned into the best meal of our whole trip.</p>
+          <div class="review-name">Google Review · Local Guide</div>
+        </div>
+      </div>
+      <div class="rating-banner reveal">Rated <b>4.8 / 5</b> across 883 Google reviews</div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="team">
+    <div class="wrap team-grid">
+      <div class="team-photo reveal">
+        <img src="images/team-stairs.jpg" alt="La Cochera del Abuelo team">
+      </div>
+      <div class="team-copy reveal">
+        <div class="eyebrow">El Equipo</div>
+        <h2 style="font-family:var(--display); font-style:italic; font-weight:400; font-size:clamp(34px,4vw,48px); margin:12px 0 24px; color:var(--bottle-dark);">Familia, no franquicia</h2>
+        <p>Every table is still walked to by Cinta herself most nights, and the kitchen brigade is small enough that Bosco tastes every plate before it leaves the pass. Nothing here has been built to scale — it's been built to not change.</p>
+        <div class="team-names">
+          <div><strong>Cinta Romero</strong><span>Proprietor</span></div>
+          <div><strong>Bosco Benítez</strong><span>Head Chef</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISIT -->
+  <section class="visit" id="visitanos">
+    <div class="wrap visit-grid">
+      <div class="reveal">
+        <div class="eyebrow">Visítanos</div>
+        <h2>Reservations open<br>most evenings</h2>
+        <div class="info-row">
+          <div class="k">Dirección</div>
+          <div class="v">Calle Álvaro de Bazán, 2<br>41002 Casco Antiguo, Sevilla</div>
+        </div>
+        <div class="info-row">
+          <div class="k">Teléfono</div>
+          <div class="v"><a href="tel:+34664440636">+34 664 44 06 36</a></div>
+        </div>
+        <div class="info-row">
+          <div class="k">Horario</div>
+          <div class="v">Cerrado Lunes<br>Martes – Sábado: comidas y cenas</div>
+        </div>
+        <div class="info-row">
+          <div class="k">Precio</div>
+          <div class="v">€30 – 70 por persona, aprox.</div>
+        </div>
+        <div class="visit-cta">
+          <a class="btn-primary" href="https://www.covermanager.com/reservation/module_restaurant/restaurante-la" target="_blank" rel="noopener">Reservar en CoverManager</a>
+        </div>
+      </div>
+      <div class="map-frame reveal">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12678.115092816157!2d-5.9964894!3d37.4009749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd126c0832aa4d89%3A0xec8450b609bccb42!2sRestaurante%20La%20Cochera%20del%20Abuelo!5e0!3m2!1sen!2sin!4v1783115583553!5m2!1sen!2sin" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Mapa La Cochera del Abuelo"></iframe>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <a href="#top" class="brandmark">
+      <svg viewBox="0 0 64 64" width="26" height="26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 8C24 16 34 20 42 14" stroke="var(--ochre)" stroke-width="1.4" stroke-linecap="round"/>
+        <circle cx="30" cy="34" r="16" stroke="var(--ochre)" stroke-width="1.4"/>
+        <circle cx="30" cy="34" r="1.6" fill="var(--ochre)"/>
+        <path d="M30 22V34L38 40" stroke="var(--ochre)" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      <span>La Cochera del Abuelo</span>
+    </a>
+    <nav>
+      <a href="https://www.instagram.com/lacocheradelabuelo" target="_blank" rel="noopener">Instagram</a>
+      <a href="tel:+34664440636">+34 664 44 06 36</a>
+      <a href="https://www.covermanager.com/reservation/module_restaurant/restaurante-la" target="_blank" rel="noopener">Reservar</a>
+    </nav>
+  </div>
+  <div class="wrap footer-fine">© 2026 La Cochera del Abuelo · Calle Álvaro de Bazán, 2, Sevilla · Diseño de sitio web</div>
+</footer>
+
+<script>
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.14 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
